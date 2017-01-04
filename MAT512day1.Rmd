@@ -1,0 +1,52 @@
+---
+title: "MAT512day1"
+author: "Steve Ruttenberg"
+date: "January 3, 2017"
+output: pdf_document
+---
+
+## First Class
+
+First thoughts - sounds AWESOME
+
+Fundamental Knowledge notes on board -> see written notes
+
+Concepts: Ch. 1 - Financial Data and their Properties -> very basic
+
+Now to R - explaining how to install packages, read in data, etc....
+```{r}
+install.packages("quantmod")
+library(quantmod)
+```
+
+this was the tutorial code:
+```{r}
+#plot the returns
+
+#read IBM stock data
+setwd('/Users/sruttenb/Desktop')
+ibm<-read.table('d-ibm-0110.txt', header=T)
+attach(ibm)
+date1<-as.Date(as.character(date), format='%Y%m%d')
+
+#simple return
+plot(date1,return,col='black',type='l',ylab='Simple Return R_t',xlab='Year')
+
+#continuous compounding return
+con_return<-log(1+return)
+##dev.new()
+plot(date1,con_return,col='blue',type='l',ylab='Log Return r_t',xlab='Year')
+
+diff<-abs(return-con_return) #when return is small, simple return approximately equals to continuous compounded return 
+
+```
+
+
+```{r}
+#use Quantmod package
+library(quantmod)
+date2<-strptime(date,format='%Y%m%d')
+ibmxts<-xts(return,order.by=date2)
+chartSeries(ibmxts)
+```
+
